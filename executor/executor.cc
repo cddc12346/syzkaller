@@ -780,7 +780,7 @@ void execute_one()
 	realloc_output_data();
 	output_builder.emplace(output_data, output_size);
 	uint64 start = current_time_ms();
-	uint8* input_pos = input_data;
+	uint8* input_pos = input_data;		// [A] the mmap region
 
 #if GOOS_linux
 	char buf[64];
@@ -802,7 +802,7 @@ void execute_one()
 	call_props_t call_props;
 	memset(&call_props, 0, sizeof(call_props));
 
-	read_input(&input_pos); // total number of calls
+	read_input(&input_pos); // total number of calls	-> start reading the inputs
 	for (;;) {
 		uint64 call_num = read_input(&input_pos);
 		if (call_num == instr_eof)
